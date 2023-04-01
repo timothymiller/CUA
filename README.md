@@ -81,13 +81,13 @@ Feel free to use Nativewind & Tailwind instead of Tamagui, you should be able to
 
 ### Why Clerk for auth?
 
-On a high level, clerk promises an overall user management solution instead of just authentication with things like the User Profile, Banning and Device management built-in. In practice I've personally had an great time using Clerk for Expo projects compared to other solutions like Firebase or Supabase auth for my projects.
+On a high level, clerk promises an overall user management solution instead of just authentication with things like the User Profile, Banning and Device management built-in. In practice, they have a very similar Expo/Next library with built in Hooks that are very nice to use! I've personally had an great time using Clerk compared to other solutions like Firebase or Supabase.
 
-#### *Practical things I like about Clerk*
-  
+#### *Practical things*
+
 - Really nice hooks & components (SignedIn/SignedOut) that work for both Expo and NextJS.
 - SDKs for all 3 platforms: Expo frontend, NextJS frontend, NextJS serverside.
-- Fantastic support and help from their team (from personal experience).
+- Fantastic support and help from their team on Discord(from personal experience).
 
 #### *Downsides*
 
@@ -107,7 +107,6 @@ I recommend you either spin up a Postgres instance on Railway or use Supabase, y
 - Set up your environment variables properly by duplicating the `.env.example` file, removing `.example`, and entering your environment variables.
   - **CLERK_SECRET_KEY** & **NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY**: sign up on [clerk](https://clerk.dev/) to get your API keys
   - **DATABASE_URL** (**optional**): spin up a Postgres instance with Railway or Supabase (we're using SQLlite by default now, so you don't have to do this unless you're ready for production!)
-- You need to manually enter your clerk frontend API key into `/packages/app/provider/auth/index.tsx`.
 - `yarn db-push` to push our Prisma schema to our DB.
 
 ### 2. Start up your project
@@ -115,20 +114,20 @@ I recommend you either spin up a Postgres instance on Railway or use Supabase, y
 - `yarn web` to start a web dev server.
 - `yarn native` to run on iOS or Android. **PS**: for this to work, you'll need your web app running on localhost:3000, remember that your NextJS app is also your backend!
 - `yarn studio` to start up your Prisma Studio. **PS**: the tRPC query will show nothing unless you manually open up Prisma and add a "post", or query an user info in the DB!
+- `yarn dev` to start up all packages and applications simultaneously.
 
 ### 3. Adding a new screen
 
 To automate the process explained below you can use the VSCode extension [t3-cua-tools](https://github.com/albbus-stack/t3-cua-tools), also available on the [marketplace](https://marketplace.visualstudio.com/items?itemName=albbus-stack.t3-cua-tools). It will create the files and add the necessary imports and navigation code for you.
 
-- Create your screens in `packages/app/features`.
-- For smaller components, feel free to put them in `/packages/ui`.
-- For new routes, add them in `/packages/api/src/router`, and make sure you merge them in `index.ts`.
+- Create new screens in `packages/app/features/`.
+- For smaller components feel free to put them in `packages/ui/`.
+- For new routes add a new `routeName.ts` in `packages/api/src/router/` and make sure to merge it in the `index.ts` app router.
 - When you add a new page or screen, you'll need to add the page into both Expo and NextJS:
   - **Expo**
-    - Go to `packages/app/navigation/native/index.tsx` and add the page following the example.
-    - Go to `packages/app/provider/navigation/index.tsx` and add the page following the example.
+     - Go to `apps/expo/app/` and create a new `routeName.tsx` that's importing your element from `/app/features/screenName/`.
   - **Next**
-    - Go to `apps/next/pages`, create the folder with the name being your route, and an `index.tsx` that's importing your element from `/app/feature/home`.
+    - Go to `apps/next/pages/`, create a new folder with the name being your route and an `index.tsx` that's importing your element from `/app/features/screenName/`.
 
 ## Deploying to Vercel
 

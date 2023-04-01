@@ -10,12 +10,13 @@
     "schema": "./packages/db/prisma/schema.prisma"
   },
   "scripts": {
+    "dev": "turbo run dev",
     "web": "turbo run dev --filter nextjs",
     "native": "cd apps/expo && yarn dev",
     "desktop": "turbo run dev:tauri --filter nextjs",
     "build": "turbo build",
     "clean": "rm -rf node_modules",
-    "clean:workspaces": "turbo clean",
+    "clean:workspaces": "turbo clean ; rm -rf .yarn/cache .yarn/install-state.gz",
     "db-push": "turbo db-push",
     "postinstall": "yarn build:ui && yarn generate",
     "generate": "cd packages/db && yarn prisma generate",
